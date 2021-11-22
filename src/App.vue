@@ -8,6 +8,9 @@
 
 <script>
 export default {
+  components:{
+    // LetterList
+  },
   name: "App",
 
   data() {
@@ -19,16 +22,16 @@ export default {
   watch: {
     $route(to, from) {
       // 通过判断路由自定义的级别来判断是转入还是转出
-      if (to.meta.level == 100 || from.meta.level == 100) {
+      if (to.meta.level === 100 || from.meta.level === 100) {
         this.transition_name = "";
       } else if (
         to.meta.level > from.meta.level ||
-        (from.meta.level == undefined && to.meta.level == 1)
+        (from.meta.level === undefined && to.meta.level === 1)
       ) {
         this.transition_name = "slide-left";
       } else if (
         to.meta.level < from.meta.level ||
-        (from.meta.level == undefined && to.meta.level > 1)
+        (from.meta.level === undefined && to.meta.level > 1)
       ) {
         this.transition_name = "slide-right";
       }
@@ -38,7 +41,9 @@ export default {
 </script>
 
 <style>
-* {
+  @import "./assets/css/base.css";
+
+  * {
   margin: 0;
   padding: 0;
   position: relative;

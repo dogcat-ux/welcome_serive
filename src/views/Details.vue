@@ -15,7 +15,7 @@
         />
       </div>
 
-      <div id="logo" :class="{ no_logo: logo == '' }">
+      <div id="logo" :class="{ no_logo: logo === '' }">
         <img class="logo_image" :src="logo" />
       </div>
 
@@ -26,20 +26,20 @@
     </div>
 
     <div id="main_body">
-      <div class="group" :class="{ no_group: group_num == '' }">
+      <div class="group" :class="{ no_group: group_num === '' }">
         <img class="group_icon" src="../assets/image/group_num.png" />
         <span id="group_label">纳新群号:</span>
         <span id="group_num">{{ group_num }}</span>
       </div>
 
-      <div class="link" :class="{ no_link: link == '' }">
+      <div class="link" :class="{ no_link: link === '' }">
         <img class="link_icon" src="../assets/image/link.png" />
         <span id="link_label">报名链接:</span>
         <span id="link_num" @click="go_link()">{{ link }}</span>
       </div>
 
-      <div class="star" :class="{ no_star: star_level == 0 }">
-        <img class="star_icon" src="../assets/image/star_level.png" />
+      <div class="star" :class="{ no_star: star_level === 0 }">
+        <img class="star_icon" src="../assets/image/star_level.png"/>
         <span id="star_label">组织星级:</span>
         <span v-for="i in star_level" :key="i">
           <img class="star_level_icon" src="../assets/image/star.png" />
@@ -72,6 +72,8 @@
 </template>
 
 <script>
+import {getOrgDetail} from "../api/department";
+
 export default {
   name: "Details",
 
@@ -99,38 +101,25 @@ export default {
     new() {
       let account = this.$route.params.id;
 
-      this.$axios({
-        method: "get",
-        url: `/app/account/${account}`,
-      }).then((re) => {
-        // console.log(re);
-        this.accountId = re.data.account;
-        this.name = re.data.departmentName;
-        let mark = re.data.mark;
-        if (mark == 0) {
-          this.level = "院级社团";
-        } else if (mark == 1) {
-          this.level = "院级部门";
-        } else if (mark == 2) {
-          this.level = "校级社团";
-        } else {
-          this.level = "校级部门";
-        }
-
-        let { department } = re.data;
+      getOrgDetail(account).then((re) => {
+        console.log("getDepartmentDetail",re);
+        this.name = re.data.data.departmentName;
+        this.level = re.data.data.mark;
+        this.level=re.data.data.mark;
+        let department  = re.data.data;
         this.id = department.departmentId;
         this.star_level = department.starLevel;
         this.group_num = department.recruitingGroup;
         this.link = department.applyLink;
         this.logo = department.logo;
-        this.has_member = department.hasMember;
+        this.has_member = true;
 
         let mammoth = require("mammoth");
 
-        if (department.introductionDoc == "") {
+        if (department.introductionDoc === "") {
           return;
         }
-
+        //解析文件
         let file_url = department.introductionDoc;
         // let flag = department.introductionDoc.split("/")[3];
         // let index = department.introductionDoc.indexOf(flag);

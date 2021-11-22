@@ -4,13 +4,15 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 // 引入组件
-const home = () => import('../components/home.vue')
-const main = () => import('../components/main.vue')
-const other = () => import('../components/other.vue')
-const search = () => import('../components/search.vue')
-const second = () => import('../components/second_main.vue')
-const details = () => import('../components/details.vue')
-const members = () => import('../components/members.vue')
+const home = () => import('../views/Home.vue')
+const main = () => import('../views/Main.vue')
+const other = () => import('../views/Other.vue')
+const search = () => import('../views/Search.vue')
+const second = () => import('../views/SecondMain.vue')
+const details = () => import('../views/Details.vue')
+const members = () => import('../views/Members.vue')
+// eslint-disable-next-line no-unused-vars
+const CommonFrame = () => import('../components/CommonFrame.vue')
 
 const router = new VueRouter({
     base: '',
@@ -53,6 +55,7 @@ const router = new VueRouter({
         },
         {
             path: '/search/:from/:id',
+            // path: '/search/:from',
             component: search,
             name: 'search',
             meta: {
@@ -61,7 +64,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/next/:id/:name',
+            path: '/next/:collegeId/:id/:name',
             component: main,
             name: 'next',
             meta: {
@@ -82,6 +85,15 @@ const router = new VueRouter({
             path: '/members/:id/:name',
             component: members,
             name: 'members',
+            meta: {
+                level: 6,
+                keepAlive: false
+            }
+        },
+        {
+            path: '/CommonFrame',
+            component: CommonFrame,
+            name: 'CommonFrame',
             meta: {
                 level: 6,
                 keepAlive: false
