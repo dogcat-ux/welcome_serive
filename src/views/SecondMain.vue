@@ -91,22 +91,23 @@
         this.$router.go(-1);
       },
 
-      go_search() {
-        if (this.isDepartment) {
-          this.$router.push(`/search/second/${this.college_id}`);
-        } else {
-          this.$router.push(`/search/league/${this.college_id}`);
-        }
-
-        let mark;
-        if (this.title === "校级" && !this.isDepartment) {
-          mark = 2;
-        } else if (this.title !== "校级" && !this.isDepartment) {
-          mark = 0;
-        }
-
-        localStorage.setItem("mark", mark);
-      },
+      // go_search() {
+      //   console.log("this.isDepartment",this.isDepartment)
+      //   if (this.isDepartment) {
+      //     this.$router.push(`/search/second/${this.college_id}`);
+      //   } else {
+      //     this.$router.push(`/search/league/${this.college_id}`);
+      //   }
+      //
+      //   let mark;
+      //   if (this.title === "校级" && !this.isDepartment) {
+      //     mark = 2;
+      //   } else if (this.title !== "校级" && !this.isDepartment) {
+      //     mark = 0;
+      //   }
+      //
+      //   localStorage.setItem("mark", mark);
+      // },
 
       go_next(item) {
         if (this.isDepartment) {

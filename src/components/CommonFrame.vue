@@ -193,7 +193,14 @@
 
       goSearch() {
         welcomeSearch();
-        let pageName = this.$route.path.split('/')[1];
+        let pageName = this.isDepartment ? this.$route.path.split('/')[1] : "league";
+        // !this.isDepartment && pageName = "league";
+        // if (this.isDepartment) {
+        //   this.$router.push(`/search/second/${this.college_id}`);
+        // } else {
+        //   pageName="league";
+        //   this.$router.push(`/search/league/${this.college_id}`);
+        // }
         this.$router.push({
           path: `/search/${pageName}/0`, query: {
             dataArr: this.dataArr,
@@ -208,18 +215,20 @@
   };
 </script>
 
-<style  scoped>
+<style scoped>
   #home {
     height: 100vh;
     background-color: #f8f8f8;
     overflow: hidden;
   }
+
   #home #title_bar {
     border: #f8f8f8 1px solid;
     box-sizing: border-box;
     width: 375px;
     height: 61px;
   }
+
   #home #title_bar #title_body {
     display: flex;
     align-items: center;
@@ -228,51 +237,62 @@
     height: 25px;
     margin: 19px auto 0 auto;
   }
+
   #home #title_bar #title_body #title_front {
     display: flex;
     align-items: center;
   }
+
   #home #title_bar #title_body #title_front .back_icon {
     width: 10px;
     height: 19px;
   }
+
   #home #title_bar #title_body #title_front #title_label {
     margin-left: 26px;
     font-size: 18px;
   }
+
   #home #title_bar #title_body #title_search .search_icon {
     width: 18px;
     height: 18px;
   }
+
   #home #main_body {
     width: 375px;
   }
+
   #home #main_body #title_tag {
     display: flex;
     height: 35px;
     width: 375px;
     background-color: #f8f8f8;
   }
+
   #home #main_body #title_tag .tags {
     font-size: 15px;
     color: #1089ff;
     height: 35px;
     padding: 7px 0;
   }
+
   #home #main_body #title_tag .tag {
     padding-left: 22px;
     padding-right: 22px;
     background-color: #fff;
     border-radius: 15px 15px 0 0;
   }
+
   #home #main_body #title_tag .tag_p1 {
     padding-left: 22px;
     padding-right: 7px;
   }
+
   #home #main_body #title_tag .tag_p2 {
     padding-left: 7px;
     padding-right: 22px;
   }
+
   #home #main_body .main_content {
     padding-top: 9px;
     width: 375px;
@@ -282,6 +302,7 @@
     display: flex;
     flex-direction: row;
   }
+
   #home #main_body .main_content2 {
     background-color: #fff;
     padding-top: 10px;
@@ -291,13 +312,16 @@
     display: flex;
     flex-direction: row;
   }
+
   #home #main_body .item-list {
     width: 332px;
     padding-left: 32px;
   }
+
   #home #main_body .letter-list-box {
     width: 43px;
   }
+
   #home #main_body .letter-list-box .letter-list {
     position: fixed;
     right: 11px;
@@ -305,6 +329,7 @@
     /*<!--transform: translateX(-50%);-->*/
     text-align: center;
   }
+
   .long-active {
     /*position: absolute;*/
     position: fixed;
@@ -321,6 +346,7 @@
     text-align: center;
     border-radius: 50%;
   }
+
   /*  动画加载*/
   .loader {
     font-size: 20px;
@@ -330,11 +356,13 @@
     text-indent: -9999em;
     animation: load-effect 1s infinite linear;
   }
+
   @keyframes load-effect {
     0% {
       box-shadow: 2em -2em 0 0 #3b9eff, /*右上*/ 3em 0 0 -0.5em #3b9eff, /*右*/ 2em 2em 0 -0.5em #3b9eff, /*右下*/ 0 3em 0 -0.5em #3b9eff, /*下*/ -2em 2em 0 -0.5em #3b9eff, /*左下*/ -3em 0 0 -0.5em #3b9eff, /*左*/ -2em -2em 0 0 #3b9eff;
       /*左上*/
     }
   }
+
   /*# sourceMappingURL=01.css.map */
 </style>

@@ -181,6 +181,7 @@
       },
 
       go_next(item) {
+        console.log("item",item)
         console.log("this.path", this.path)
         let id = this.path === "main" ? item.collegeId : this.path === "second" ? item.parentId : item.orgId;
         let name =
