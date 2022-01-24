@@ -9,8 +9,11 @@
                 v-for="(item, index) in items"
                 :key="index"
                 :id="item.firstLetter"
-                @click.native="go_next(item[orgName],item[fullName])">
+                @click.native="go_next(item[orgId],item[fullName])">
       </ItemList>
+      <div v-if="items.length===0" class="empty-img-common">
+        <img src="../assets/image/empty.png" alt="">
+      </div>
     </div>
   </CommonFrame>
 </template>
@@ -20,7 +23,6 @@
   import ItemList from "../components/ItemList";
   import {getExcellent} from "../api/excellent";
   import {get_first_letter} from "../tool/getFirstLetter";
-  // import {get_first_letter} from "../tool/getFirstLetter";
 
   export default {
     name: "Other",
@@ -31,13 +33,13 @@
       return {
         items: [],
         orgName:this.$Global.ORGNAME,
+        orgId:"orgId",
         fullName:this.$Global.FULLNAME,
       };
     },
 
     created() {
       getExcellent().then(res => {
-        console.log("getExcellent", res)
         res.data.data.forEach(value => {
           value.firstLetter = get_first_letter(value.fullName[0])
         })

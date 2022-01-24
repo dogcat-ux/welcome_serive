@@ -1,7 +1,6 @@
 <template>
   <div class="letter-list">
     <span><img src="../assets/image/leterrStar.png" alt=""></span>
-<!--    :href="'#'+hrefItem"-->
     <a :class="{ 'letter-active': item===clickItem }"
        v-for="(item,index) in letters"
        :key="index"
@@ -68,14 +67,14 @@
           posX = event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft;
           posY = event.clientY + document.documentElement.scrollTop + document.body.scrollTop;
         }
-        console.log(posX,posY)
+        // console.log(posX,posY)
         return [posX,posY];
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   .letter-list{
     width: 10px;
     height: 516px;
@@ -85,37 +84,37 @@
     text-align: center;
     margin-top: 26px;
     font-size: 14px;
-    a,span{
-      flex: 1;
-      font-size: 14px;
-      height: 19px;
-      line-height: 19px;
-      text-align: center;
-      margin:0 auto;
-      color: #cdcdcd;
-      font-family: SF Pro Text,sans-serif;
-    }
-    .letter-active{
-      color: #3b9eff;
-    }
-    img{
-      width: 10px;
-      height: 10px;
-    }
-    .long-active{
-      position:absolute;
-      z-index: 999;
-      width: 56px;
-      height: 56px;
-      background-color: #3b9eff;
-      font-size: 35px;
-      font-family: Roboto,sans-serif;
-      font-weight: normal;
-      font-stretch: normal;
-      color: #ffffff;
-      line-height: 56px;
-      text-align: center;
-      border-radius: 50%;
-    }
+  }
+  a,span{
+    flex: 1;
+    font-size: 14px;
+    height: 19px;
+    line-height: 19px;
+    text-align: center;
+    margin:0 auto;
+    color: #cdcdcd;
+    font-family: SF Pro Text,sans-serif;
+  }
+  .letter-active{
+    color: #3b9eff;
+  }
+  img{
+    width: 10px;
+    height: 10px;
+  }
+  .long-active{
+    position:absolute;
+    z-index: 999;
+    width: 56px;
+    height: 56px;
+    background-color: #3b9eff;
+    font-size: 35px;
+    font-family: Roboto,sans-serif;
+    font-weight: normal;
+    font-stretch: normal;
+    color: #ffffff;
+    line-height: 56px;
+    text-align: center;
+    border-radius: 50%;
   }
 </style>

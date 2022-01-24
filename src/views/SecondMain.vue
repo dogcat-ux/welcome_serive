@@ -15,9 +15,16 @@
                 @click.native="go_next(item)"
       >
       </ItemList>
+      <div v-if="departments.length===0" class="empty-img-common">
+        <img src="../assets/image/empty.png" alt="">
+      </div>
     </div>
     <div slot="item-list" v-else>
-      <ItemList v-for="(item, index) in leagues"
+      <div v-if="leagues.length===0" class="empty-img-common">
+        <img src="../assets/image/empty.png" alt="">
+      </div>
+      <ItemList v-else
+                v-for="(item, index) in leagues"
                 :item="{itemTitle:item[orgName]}"
                 :key="index"
                 :id="item.firstLetter"
@@ -33,6 +40,7 @@
   import ItemList from "../components/ItemList";
   import {getAssociation} from "../api/department";
   import {getParent} from "../api/department.js"
+  import {welcomeBMXQ} from "../api/buriedPoint";
 
   export default {
     name: "Second_main",
@@ -62,14 +70,13 @@
       //
       // 获取部门
       getParent(this.college_id).then(res => {
-        console.log("getParent", res)
-        this.departments = res.data.data;
+        this.departments = res?.data?.data;
       })
 
       // 获取社团
       getAssociation(this.college_id).then((re) => {
         console.log("org",re)
-        this.leagues = re.data.data;
+        this.leagues = re?.data?.data;
       });
     },
 
@@ -104,12 +111,14 @@
       go_next(item) {
         if (this.isDepartment) {
           let id = item.parentId;
-          let collegeId = item.c_id;
+          let collegeId = this.$route.params.id;
           let name = item.parentName;
+          welcomeBMXQ(name);
           this.$router.push(`/next/${collegeId}/${id}/${name}`);
         } else {
-          let id = item.accountId;
-          let name = item.departmentName;
+          let id = item[this.$Global.ORGID];
+          let name = item[this.$Global.ORGNAME];
+          welcomeBMXQ(name);
           this.$router.push({path: `/details/${id}/${name}`});
         }
       },

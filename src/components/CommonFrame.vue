@@ -19,8 +19,10 @@
         </div>
       </div>
     </div>
-    <div id="main_body" ref="scrollview">
-      <template v-if="isTag">
+    <div id="main_body">
+      <!--    <div id="main_body">-->
+      <template v-if="isTag"
+      >
         <div id="title_tag">
           <div id="box1" :class="{ box_show: !isDepartment }">
             <div id="box2"></div>
@@ -52,14 +54,19 @@
         </div>
       </template>
       <div :class="isTag?'main_content':'main_content2'">
-        <div class="item-list">
+        <div v-if="isLoading">
+          <Loading></Loading>
+        </div>
+        <div class="item-list" v-else>
           <slot name="item-list"></slot>
           <div class="long-active"
                v-show="isActive"
                :style="activeStyle">{{item}}
           </div>
         </div>
-        <div class="letter-list-box">
+        <div class="letter-list-box"
+             ref="scrollview"
+        >
           <LetterList @touchstart1="touchstart"
                       @touchend1="touchend"
                       class="letter-list"
@@ -75,6 +82,8 @@
   // <!--  大体框架组件-->
   import LetterList from "./LetterList";
   import {classifyByLetter} from "../tool/classifyByLetter";
+  import Loading from "./Loading";
+  import {welcomeSearch} from "../api/buriedPoint";
 
   export default {
     name: "CommonFrame",
@@ -94,7 +103,7 @@
       }
     },
     components: {
-      LetterList
+      LetterList, Loading
     },
     props: {
       title: String,
@@ -126,12 +135,17 @@
       itemName: String,//数据的关键字名称
       urlName: String,
     },
+    computed: {
+      isLoading() {
+        return this.$store.state.loading;
+      }
+    },
     watch: {
       dataArr() {
         if (this.dataArr && this.itemName) {
           this.lettersExist = classifyByLetter(this.dataArr, this.itemName)[1];
         }
-      }
+      },
     },
     methods: {
       go_department() {
@@ -147,8 +161,8 @@
       },
       touchstart(object) {
         //根据长按的位置动态修改字母活动框的位置
-        this.clickX = object.x -100;
-        this.clickY = object.y  -100 + this.$refs.scrollview.scrollTop;
+        this.clickX = object.x - 100;
+        this.clickY = object.y - 25;
         this.isActive = true;
         this.item = object.item;
         this.activeStyle.left = this.clickX + 'px';
@@ -178,136 +192,122 @@
       },
 
       goSearch() {
+        welcomeSearch();
         let pageName = this.$route.path.split('/')[1];
         this.$router.push({
           path: `/search/${pageName}/0`, query: {
             dataArr: this.dataArr,
             itemName: this.itemName
           }
-        })
+        });
+        this.$store.commit("SET_DataArr", this.dataArr);
+        this.$store.commit("SET_ItemName", this.itemName);
+        this.$store.commit("SET_SearchFrom", pageName);
       },
     },
   };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
   #home {
     height: 100vh;
     background-color: #f8f8f8;
     overflow: hidden;
-
-    #title_bar {
-      border: #f8f8f8 1px solid;
-      box-sizing: border-box;
-      width: 375px;
-      height: 61px;
-
-      #title_body {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 325px;
-        height: 25px;
-        margin: 0 auto;
-        margin-top: 19px;
-
-        #title_front {
-          display: flex;
-          align-items: center;
-
-          .back_icon {
-            width: 10px;
-            height: 19px;
-          }
-
-          #title_label {
-            margin-left: 26px;
-            font-size: 18px;
-          }
-        }
-
-        #title_search {
-          .search_icon {
-            width: 18px;
-            height: 18px;
-          }
-        }
-      }
-    }
-
-    #main_body {
-      width: 375px;
-
-      #title_tag {
-        display: flex;
-        height: 35px;
-        width: 375px;
-        background-color: #f8f8f8;
-
-        .tags {
-          font-size: 15px;
-          color: #1089ff;
-          height: 35px;
-          padding: 7px 0;
-        }
-
-        .tag {
-          padding-left: 22px;
-          padding-right: 22px;
-          background-color: #fff;
-          border-radius: 15px 15px 0 0;
-        }
-
-        .tag_p1 {
-          padding-left: 22px;
-          padding-right: 7px;
-        }
-
-        .tag_p2 {
-          padding-left: 7px;
-          padding-right: 22px;
-        }
-
-      }
-
-      .main_content {
-        padding-top: 9px;
-        width: 375px;
-        height: calc(100vh - 96px);
-        overflow: auto;
-        background-color: #fff;
-        display: flex;
-        flex-direction: row;
-      }
-
-      .main_content2 {
-        background-color: #fff;
-        padding-top: 10px;
-        height: calc(100vh - 61px);
-        border-radius: 0 40px 0 0;
-        overflow: auto;
-        display: flex;
-        flex-direction: row;
-      }
-      .item-list {
-        width: 332px;
-        padding-left: 32px;
-      }
-      .letter-list-box{
-        width: 43px;
-        .letter-list {
-          position: fixed;
-          right: 11px;
-          /*left: 50%;*/
-          /*<!--transform: translateX(-50%);-->*/
-          text-align: center;
-        }
-      }
-    }
   }
-
+  #home #title_bar {
+    border: #f8f8f8 1px solid;
+    box-sizing: border-box;
+    width: 375px;
+    height: 61px;
+  }
+  #home #title_bar #title_body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 325px;
+    height: 25px;
+    margin: 19px auto 0 auto;
+  }
+  #home #title_bar #title_body #title_front {
+    display: flex;
+    align-items: center;
+  }
+  #home #title_bar #title_body #title_front .back_icon {
+    width: 10px;
+    height: 19px;
+  }
+  #home #title_bar #title_body #title_front #title_label {
+    margin-left: 26px;
+    font-size: 18px;
+  }
+  #home #title_bar #title_body #title_search .search_icon {
+    width: 18px;
+    height: 18px;
+  }
+  #home #main_body {
+    width: 375px;
+  }
+  #home #main_body #title_tag {
+    display: flex;
+    height: 35px;
+    width: 375px;
+    background-color: #f8f8f8;
+  }
+  #home #main_body #title_tag .tags {
+    font-size: 15px;
+    color: #1089ff;
+    height: 35px;
+    padding: 7px 0;
+  }
+  #home #main_body #title_tag .tag {
+    padding-left: 22px;
+    padding-right: 22px;
+    background-color: #fff;
+    border-radius: 15px 15px 0 0;
+  }
+  #home #main_body #title_tag .tag_p1 {
+    padding-left: 22px;
+    padding-right: 7px;
+  }
+  #home #main_body #title_tag .tag_p2 {
+    padding-left: 7px;
+    padding-right: 22px;
+  }
+  #home #main_body .main_content {
+    padding-top: 9px;
+    width: 375px;
+    height: calc(100vh - 96px);
+    overflow: auto;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+  }
+  #home #main_body .main_content2 {
+    background-color: #fff;
+    padding-top: 10px;
+    height: calc(100vh - 61px);
+    border-radius: 0 40px 0 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+  }
+  #home #main_body .item-list {
+    width: 332px;
+    padding-left: 32px;
+  }
+  #home #main_body .letter-list-box {
+    width: 43px;
+  }
+  #home #main_body .letter-list-box .letter-list {
+    position: fixed;
+    right: 11px;
+    /*left: 50%;*/
+    /*<!--transform: translateX(-50%);-->*/
+    text-align: center;
+  }
   .long-active {
-    position: absolute;
+    /*position: absolute;*/
+    position: fixed;
     z-index: 100;
     width: 56px;
     height: 56px;
@@ -321,4 +321,20 @@
     text-align: center;
     border-radius: 50%;
   }
+  /*  动画加载*/
+  .loader {
+    font-size: 20px;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    text-indent: -9999em;
+    animation: load-effect 1s infinite linear;
+  }
+  @keyframes load-effect {
+    0% {
+      box-shadow: 2em -2em 0 0 #3b9eff, /*右上*/ 3em 0 0 -0.5em #3b9eff, /*右*/ 2em 2em 0 -0.5em #3b9eff, /*右下*/ 0 3em 0 -0.5em #3b9eff, /*下*/ -2em 2em 0 -0.5em #3b9eff, /*左下*/ -3em 0 0 -0.5em #3b9eff, /*左*/ -2em -2em 0 0 #3b9eff;
+      /*左上*/
+    }
+  }
+  /*# sourceMappingURL=01.css.map */
 </style>

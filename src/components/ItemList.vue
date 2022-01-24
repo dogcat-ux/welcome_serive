@@ -25,7 +25,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   .item_list-content {
     display: flex;
     align-items: center;
@@ -34,21 +34,20 @@
     width: 300px;
     height: 56px;
     padding: 17px 0;
-
-    .item_name {
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      .item_icon {
-        width: 19px;
-        height: 19px;
-        margin-right: 23px;
-      }
-    }
-
-    .next_icon {
-      width: 10px;
-      height: 16px;
-    }
   }
+  .item_list-content .item_name {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+  }
+  .item_list-content .item_name .item_icon {
+    width: 19px;
+    height: 19px;
+    margin-right: 23px;
+  }
+  .item_list-content .next_icon {
+    width: 10px;
+    height: 16px;
+  }
+  /*# sourceMappingURL=01.css.map */
 </style>

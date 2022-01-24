@@ -21,6 +21,9 @@
         </div>
         <span class="item_position">{{ member.job }}</span>
       </div>
+      <div v-if="members.length===0" class="empty-img-common-middle">
+        <img src="../assets/image/empty.png" alt="">
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +42,7 @@
     },
 
     created() {
-      getMember().then((re) => {
+      getMember(this.id).then((re) => {
         this.members = re.data.data;
       });
     },

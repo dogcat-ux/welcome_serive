@@ -206,114 +206,103 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   #home {
     height: 100vh;
     background-color: #f8f8f8;
     overflow: hidden;
-
-    #title_bar {
-      border: #f8f8f8 1px solid;
-      box-sizing: border-box;
-      width: 375px;
-      height: 61px;
-
-      #title_body {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 325px;
-        height: 25px;
-        margin: 0 auto;
-        margin-top: 19px;
-
-        #title_front {
-          display: flex;
-          align-items: center;
-
-          .back_icon {
-            width: 10px;
-            height: 19px;
-          }
-
-          #title_label {
-            margin-left: 26px;
-            font-size: 18px;
-          }
-        }
-
-        #title_search {
-          .search_icon {
-            width: 18px;
-            height: 18px;
-          }
-        }
-      }
-    }
-
-    #main_body {
-      padding-top: 10px;
-      height: calc(100vh - 61px);
-      width: 375px;
-      border-radius: 0 40px 0 0;
-      background-color: #fff;
-      overflow: auto;
-      display: flex;
-
-      .item-list {
-        width: 350px;
-      }
-
-      .letter-list {
-        width: 18px;
-        position: fixed;
-        right: 11px;
-        .letter-list-list{
-          width: 10px;
-          height: 516px;
-          display: flex;
-          flex-direction: column;
-          text-align: center;
-          margin-top: 26px;
-          font-size: 14px;
-          a,span{
-            flex: 1;
-            font-size: 14px;
-            height: 19px;
-            line-height: 19px;
-            text-align: center;
-            margin:0 auto;
-            color: #cdcdcd;
-            font-family: SF Pro Text,sans-serif;
-          }
-          .letter-active{
-            color: #3b9eff;
-          }
-          img{
-            width: 10px;
-            height: 10px;
-          }
-          .long-active{
-            position:absolute;
-            z-index: 999;
-            width: 56px;
-            height: 56px;
-            background-color: #3b9eff;
-            font-size: 35px;
-            font-family: Roboto,sans-serif;
-            font-weight: normal;
-            font-stretch: normal;
-            color: #ffffff;
-            line-height: 56px;
-            text-align: center;
-            border-radius: 50%;
-          }
-        }
-        /*margin-left: 350px;*/
-      }
-    }
   }
-
+  #title_bar {
+    border: #f8f8f8 1px solid;
+    box-sizing: border-box;
+    width: 375px;
+    height: 61px;
+  }
+  #title_body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 325px;
+    height: 25px;
+    margin: 0 auto;
+    margin-top: 19px;
+  }
+  #title_front {
+    display: flex;
+    align-items: center;
+  }
+  #title_front .back_icon {
+    width: 10px;
+    height: 19px;
+  }
+  #title_front #title_label {
+    margin-left: 26px;
+    font-size: 18px;
+  }
+  #title_search .search_icon {
+    width: 18px;
+    height: 18px;
+  }
+  #main_body {
+    padding-top: 10px;
+    height: calc(100vh - 61px);
+    width: 375px;
+    border-radius: 0 40px 0 0;
+    background-color: #fff;
+    overflow: auto;
+    display: flex;
+  }
+  .item-list {
+    width: 350px;
+  }
+  .letter-list {
+    width: 18px;
+    position: fixed;
+    right: 11px;
+    /*margin-left: 350px;*/
+  }
+  .letter-list-list {
+    width: 10px;
+    height: 516px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 26px;
+    font-size: 14px;
+  }
+  .letter-list-list a,
+  .letter-list-list span {
+    flex: 1;
+    font-size: 14px;
+    height: 19px;
+    line-height: 19px;
+    text-align: center;
+    margin: 0 auto;
+    color: #cdcdcd;
+    font-family: SF Pro Text, sans-serif;
+  }
+  .letter-list-list .letter-active {
+    color: #3b9eff;
+  }
+  .letter-list-list img {
+    width: 10px;
+    height: 10px;
+  }
+  .letter-list-list .long-active {
+    position: absolute;
+    z-index: 999;
+    width: 56px;
+    height: 56px;
+    background-color: #3b9eff;
+    font-size: 35px;
+    font-family: Roboto, sans-serif;
+    font-weight: normal;
+    font-stretch: normal;
+    color: #ffffff;
+    line-height: 56px;
+    text-align: center;
+    border-radius: 50%;
+  }
   .long-active {
     position: absolute;
     z-index: 100;

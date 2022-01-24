@@ -39,7 +39,7 @@ function getOrgDetail(orgId) {
     })
   }
   //根据部门、社团 id，获取成员列表
-function getMember(orgId ) {
+function getMember(orgId) {
   return request({
     url: `/member?orgId=${orgId}`,
     method: 'get',

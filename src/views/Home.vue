@@ -10,6 +10,7 @@
 <script>
   import CommonFrame from "../components/CommonFrame";
   import ItemList from "../components/ItemList";
+  import {welcomeSTBM, welcomeXZZZ} from "../api/buriedPoint";
 
   export default {
     name: "Home",
@@ -46,10 +47,12 @@
       },
 
       go_other() {
+        welcomeXZZZ();
         this.$router.push("other");
       },
 
       go_main() {
+        welcomeSTBM();
         this.$router.push("main");
       },
     },
