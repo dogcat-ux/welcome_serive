@@ -2,9 +2,9 @@ name: Build And Deploy
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
   pull_request:
-    branches: [ develop ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -33,5 +33,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.KEY }}
           SOURCE: "dist/"
-          TARGET: "/usr/local/nginx/html/"
+          TARGET: "/usr/local/nginx/html/welcom"
           REMOTE_HOST: ${{ secrets.HOST }}

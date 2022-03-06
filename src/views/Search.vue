@@ -6,7 +6,7 @@
                 class="back_icon"
                 src="../assets/image/back.png"
                 @click="go_back"
-        />
+                alt="#"/>
 
         <div id="key">
           <input
@@ -17,12 +17,13 @@
                   v-model="key"
                   @keyup="search"
           />
-          <a href="javascript:;" class="clear_input">
+<!--          <a href="javascript:;" class="clear_input">-->
+          <a class="clear_input">
             <img
                     src="../assets/image/clear.png"
                     class="clear_icon"
                     @click="clear_text"
-            />
+             alt="#"/>
           </a>
         </div>
       </div>
@@ -53,14 +54,15 @@
              @click="go_next(item)"
         >
           <div class="org_box">
-            <div class="item_name">
-              {{item.orgName}}
-            </div>
-            <div class="org_introduction" v-html="parse_file(item)">
-            </div>
+            <div class="item_name">{{item.orgName||item.fullName}}</div>
+            <div class="org_introduction" v-html="parse_file(item.introductionDoc)" v-if="introduction"></div>
+            <div class="org_introduction" v-else>暂无部门/社团详情介绍，更多详细信息敬请期待</div>
           </div>
           <div class="org_box_img" v-if="item.logo">
             <img :src="item.logo" alt="#" class="img">
+          </div>
+          <div class="org_box_img" v-else>
+            <img src="../assets/image/noImg.png" alt="#" class="img">
           </div>
         </div>
       </div>
@@ -158,7 +160,8 @@
         this.key = name;
         this.items = [];
         this.isSearch = true;
-        this.isOrgSearch = this.path === "next";
+        // this.isOrgSearch = this.path === "next" || this.path === "league" || this.path === "other";
+        this.isOrgSearch = this.path === "next" || this.path === "league";
         let result = localStorage.getItem("result") ? JSON.parse(localStorage.getItem("result")) : [];
 
         if (result?.length >= 7) {
@@ -181,8 +184,6 @@
       },
 
       go_next(item) {
-        console.log("item", item)
-        console.log("this.path", this.path)
         let id = this.path === "main" ? item.collegeId : this.path === "second" ? item.parentId : item.orgId;
         let name =
             this.path === "main"
@@ -337,7 +338,7 @@
   #org_search_result .department_list {
     width: 343px;
     height: 106px;
-    margin: 0 auto;
+    margin: 0 auto 12px auto;
     border-radius: 10px;
     padding: 7px 16px;
     background-color: #ffffff;

@@ -402,7 +402,6 @@ function mkRslt(arr) {
     if (strlen == 1) {
       for (var k = 0; k < arrRslt.length; k++) {
         arrRslt[k] += str;
-        console.log(str)
       }
     } else {
       var tmpArr = arrRslt.slice(0);

@@ -37,12 +37,10 @@
 
         if (isAndroid) {
           window.yingxin.FinishFragment("finish");
-          // console.log("android");
         } else if (isIOS) {
           window.webkit.messageHandlers.ExitWelcomeServiceDetail.postMessage(
               "finish"
           );
-          // console.log("ios");
         }
       },
 

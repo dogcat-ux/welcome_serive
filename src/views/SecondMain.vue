@@ -75,7 +75,6 @@
 
       // 获取社团
       getAssociation(this.college_id).then((re) => {
-        console.log("org",re)
         this.leagues = re?.data?.data;
       });
     },
@@ -92,7 +91,6 @@
       },
 
       // go_search() {
-      //   console.log("this.isDepartment",this.isDepartment)
       //   if (this.isDepartment) {
       //     this.$router.push(`/search/second/${this.college_id}`);
       //   } else {

@@ -101,7 +101,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 48px;
+    /*height: 48px;*/
+    height: 78px;
     padding: 17px 32px 16px 32px;
     border-bottom: 1px #f8f8f8 solid;
   }

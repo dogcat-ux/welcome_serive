@@ -6,17 +6,17 @@
                 class="back_icon"
                 src="../assets/image/back.png"
                 @click="go_back"
-        />
+                alt="#"/>
 
         <img
                 class="share_icon"
                 src="../assets/image/share.png"
                 @click="go_share()"
-        />
+                alt="#"/>
       </div>
 
       <div id="logo" :class="{ no_logo: !logo }">
-        <img class="logo_image" :src="logo"/>
+        <img class="logo_image" :src="logo" alt="#"/>
       </div>
 
       <div id="title_detail">
@@ -28,33 +28,34 @@
       <div v-if="isLoading">
         <Loading/>
       </div>
-      <div v-else-if="(!group_num)&&(!link)&&(!video_link)&&(!star_level)&&(!introduction)" class="empty-img-common">
+      <div v-else-if="(!group_num)&&(!link)&&(!video_link)&&(!star_level)&&(!introduction)"
+           class="empty-img-common-middle">
         <img src="../assets/image/empty.png" alt="">
       </div>
       <div v-else>
         <div class="group" :class="{ no_group: !group_num }">
-          <img class="group_icon" src="../assets/image/group_num.png"/>
+          <img class="group_icon" src="../assets/image/group_num.png" alt="#"/>
           <span id="group_label">纳新群号：</span>
           <span id="group_num">{{ group_num }}</span>
         </div>
 
         <div class="link" :class="{ no_link: !link }">
-          <img class="link_icon" src="../assets/image/link.png"/>
+          <img class="link_icon" src="../assets/image/link.png" alt="#"/>
           <span id="link_label">报名链接：</span>
-          <span id="link_num" @click="go_link()">{{ link }}</span>
+          <span id="link_num" @click="go_link(link)">{{ link }}</span>
         </div>
 
         <div class="video_link" :class="{ no_video_link: !video_link }">
-          <img class="link_icon" src="../assets/image/video.png"/>
+          <img class="link_icon" src="../assets/image/video.png" alt="#"/>
           <span id="video_link_label">视频链接：</span>
-          <span id="video_link_num" @click="go_video()">{{ video_link }}</span>
+          <span id="video_link_num" @click="go_link(video_link)">{{ video_link }}</span>
         </div>
 
         <div class="star" :class="{ no_star: !star_level}">
-          <img class="star_icon" src="../assets/image/star_level.png"/>
+          <img class="star_icon" src="../assets/image/star_level.png" alt="#"/>
           <span id="star_label">组织星级：</span>
           <span v-for="i in star_level" :key="i">
-          <img class="star_level_icon" src="../assets/image/star.png"/>
+          <img class="star_level_icon" src="../assets/image/star.png" alt="#"/>
         </span>
         </div>
 
@@ -86,9 +87,11 @@
   import {getOrgDetail} from "../api/department";
   import parseFile from "../tool/parseFile";
   import {welcomeShare} from "../api/buriedPoint";
+  import isUrl from "../tool/isUrl";
+
   export default {
     name: "Details",
-    components:{Loading},
+    components: {Loading},
     data() {
       return {
         id: 0,
@@ -104,7 +107,7 @@
         video_link: "",
       };
     },
-    computed:{
+    computed: {
       isLoading() {
         return this.$store.state.loading;
       }
@@ -146,12 +149,10 @@
 
         if (isAndroid) {
           window.yingxin.ShareDetail(path);
-          // console.log("android");
         } else if (isIOS) {
           window.webkit.messageHandlers.ShareWelcomeServiceDetail.postMessage(
               path
           );
-          // console.log("ios");
         }
       },
 
@@ -170,16 +171,14 @@
       //   }
       // },
 
-      go_link() {
-        window.location.href = this.link;
+      go_link(link) {
+        if (isUrl(link)) {
+          window.location.href = link;
+        }
       },
 
       go_member() {
         this.$router.push({path: `/members/${this.id}/${this.name}`});
-      },
-
-      go_video() {
-        window.location.href = this.video_link;
       },
     },
   };
@@ -299,8 +298,8 @@
     text-decoration: underline;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space:normal;
-    word-break:keep-all;
+    white-space: normal;
+    word-break: keep-all;
     word-wrap: break-word;
   }
 

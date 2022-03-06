@@ -50,7 +50,6 @@
         })
       } else {
         getDepartment(this.parent_id).then(res => {
-          console.log("getDepartment", res)
           this.items = res.data.data;
         })
       }

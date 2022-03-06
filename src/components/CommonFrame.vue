@@ -174,17 +174,14 @@
           let u = navigator.userAgent;
           let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
           let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-          console.log(u)
 
           if (isAndroid) {
             window.yingxin.FinishFragment("finish");
-            // console.log("android");
           } else if (isIOS) {
             // window.webkit.
             window.webkit.messageHandlers.ExitWelcomeServiceDetail.postMessage(
                 "finish"
             );
-            // console.log("ios");
           }
         } else {
           this.$router.go(-1);
