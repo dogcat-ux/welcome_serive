@@ -36,7 +36,7 @@
         <div class="group" :class="{ no_group: !group_num }">
           <img class="group_icon" src="../assets/image/group_num.png" alt="#"/>
           <span id="group_label">纳新群号：</span>
-          <span id="group_num">{{ group_num }}</span>
+          <span id="group_num" @click="go_num(group_num)">{{ group_num }}</span>
         </div>
 
         <div class="link" :class="{ no_link: !link }">
@@ -132,6 +132,7 @@
         this.video_link = videoLink;
         await parseFile(introductionDoc, (value) => {
           this.introduction = introductionDoc ? value?.value : "";
+          console.log("valuevaluevalue",value?.value)
         });
       },
 
@@ -157,19 +158,16 @@
       },
 
       // 点击群号（跟移动端交互）
-      // go_num() {
-      //   let u = navigator.userAgent;
-      //   let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
-      //   let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      //
-      //   if (isAndroid) {
-      //     //window.[命名].[方法名](this.group_num);
-      //     console.log("android");
-      //   } else if (isIOS) {
-      //     // window.webkit.messageHandlers.[方法名].postMessage(this.group_num);
-      //     console.log("ios");
-      //   }
-      // },
+      go_num(group_num) {
+        let u = navigator.userAgent;
+        let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
+        let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+          window.yingxin.goGroup(group_num);
+        } else if (isIOS) {
+          window.webkit.messageHandlers.goGroup.postMessage(group_num);
+        }
+      },
 
       go_link(link) {
         if (isUrl(link)) {

@@ -1,9 +1,9 @@
 import Vue from "vue";  //引入axios
 import axios from 'axios'
 
-// axios.defaults.baseURL = 'https://mock.mengxuegu.com/mock/616f73c14351af34a2ddf29a/'
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api/' : 'http://120.55.53.66:9394/';
-// axios.defaults.baseURL = 'http://localhost:8080/api/'
+// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api/' : 'http://120.55.53.66:9394/';
+// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api/' : 'http://150.158.181.63:8080/';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api/' : 'https://welcome.fzuhelper.w2fzu.com/api/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 let instance = axios.create({})
 // 当前正在请求的数量

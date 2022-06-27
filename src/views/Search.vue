@@ -17,13 +17,12 @@
                   v-model="key"
                   @keyup="search"
           />
-<!--          <a href="javascript:;" class="clear_input">-->
-          <a class="clear_input">
+          <a href="javascript:;" class="clear_input">
             <img
                     src="../assets/image/clear.png"
                     class="clear_icon"
                     @click="clear_text"
-             alt="#"/>
+                    alt="#"/>
           </a>
         </div>
       </div>
@@ -43,30 +42,31 @@
         </div>
       </div>
     </template>
-    <template v-else-if="isOrgSearch">
-      <div v-if="items.length===0" class="empty-img">
-        <img src="../assets/image/empty.png" alt="">
-      </div>
-      <div id="org_search_result" v-else>
-        <div class="department_list"
-             v-for="(item, index) in items"
-             :key="index"
-             @click="go_next(item)"
-        >
-          <div class="org_box">
-            <div class="item_name">{{item.orgName||item.fullName}}</div>
-            <div class="org_introduction" v-html="parse_file(item.introductionDoc)" v-if="introduction"></div>
-            <div class="org_introduction" v-else>暂无部门/社团详情介绍，更多详细信息敬请期待</div>
-          </div>
-          <div class="org_box_img" v-if="item.logo">
-            <img :src="item.logo" alt="#" class="img">
-          </div>
-          <div class="org_box_img" v-else>
-            <img src="../assets/image/noImg.png" alt="#" class="img">
-          </div>
-        </div>
-      </div>
-    </template>
+<!--    <template v-else-if="isOrgSearch">-->
+<!--      <div v-if="items.length===0" class="empty-img">-->
+<!--        <img src="../assets/image/empty.png" alt="">-->
+<!--      </div>-->
+<!--      <div id="org_search_result" v-else>-->
+<!--        <div class="department_list"-->
+<!--             v-for="(item, index) in items"-->
+<!--             :key="index"-->
+<!--             @click="go_next(item)">-->
+<!--          <div class="org_box">-->
+<!--            <div class="item_name">{{item.orgName||item.fullName}}</div>-->
+<!--&lt;!&ndash;            <div class="org_introduction" v-html="parse_file(item.introductionDoc)"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="org_introduction" v-html="intros[index]" v-show="isParsed"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="org_introduction" v-html="item?.info" v-if="item?.info"></div>&ndash;&gt;-->
+<!--            <div class="org_introduction">详情请点击查看</div>-->
+<!--          </div>-->
+<!--          <div class="org_box_img" v-if="item.logo">-->
+<!--            <img :src="item.logo" alt="#" class="img">-->
+<!--          </div>-->
+<!--          <div class="org_box_img" v-else>-->
+<!--            <img src="../assets/image/noImg.png" alt="#" class="img">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </template>-->
     <template v-else>
       <div id="search_result" v-if="itemName!=='departmentName'">
         <div v-if="items.length===0" class="empty-img">
@@ -100,6 +100,8 @@
         introduction: '',
         isSearch: false,
         isOrgSearch: false,
+        intros:[],
+        isParsed:false
       };
     },
 
@@ -116,11 +118,14 @@
     },
 
     methods: {
-      parse_file(introductionDoc) {
-        parseFile(introductionDoc, (value) => {
-          this.introduction = introductionDoc ? value?.value : "";
-        }).then();
-        return this.introduction;
+       parse_file(introductionDoc) {
+         let introduction=""
+         parseFile(introductionDoc, (value) => {
+          introduction = introductionDoc ? value?.value : "";
+          this.intros.push(introduction)
+          this.isParsed=true;
+        })
+        return introduction;
       },
 
       go_back() {
@@ -179,7 +184,14 @@
         localStorage.setItem("result", JSON.stringify(result));
         //------------
         if (this.dataArr.length > 0) {
-          this.items = this.dataArr.filter(data => (!name || data[this.itemName].toLowerCase().includes(name.toLowerCase())) || makePy(data[this.itemName]).toLowerCase().includes(name.toLowerCase()))
+          this.items = this.dataArr?.filter(data => (!name || data[this.itemName].toLowerCase().includes(name.toLowerCase())) || makePy(data[this.itemName]).toLowerCase().includes(name.toLowerCase()))
+        }
+        if(this.isOrgSearch){
+          this.items.forEach((item,index) => {
+            parseFile(item.introductionDoc, (value) => {
+              this.items[index]={...value, info:item.introductionDoc ? value?.value : ""}
+            })
+          })
         }
       },
 

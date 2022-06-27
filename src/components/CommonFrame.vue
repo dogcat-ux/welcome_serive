@@ -8,8 +8,9 @@
                   src="../assets/image/back.png"
                   @click="goBack"
           />
-          <span id="title_label">{{title}}</span>
+          <div id="title_label">{{title}}</div>
         </div>
+        <div class="connect-us" v-if="isHome" @click="touchus">联系我们</div>
         <div id="title_search" v-if="isSearch">
           <img
                   class="search_icon"
@@ -75,6 +76,22 @@
         </div>
       </div>
     </div>
+    <div class="mask" v-show="isMask">
+      <div class="touch-box">
+        <div class="touch-title">
+          联系我们
+        </div>
+        <div class="touch-text">
+          请加入福大助手社团与部门相关问题咨询群
+        </div>
+        <div class="touch-footer">
+          <div class="footer-box">
+            <div @click="goNum" class="addNum">加咨询群</div>
+            <div @click="mackOk">确定</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -98,6 +115,7 @@
           left: this.clickX + 'px',
           top: this.clickY + 'px'
         },
+        isMask:false,
         lettersExist: [],
         isDepartment: true,
       }
@@ -191,13 +209,6 @@
       goSearch() {
         welcomeSearch();
         let pageName = this.isDepartment ? this.$route.path.split('/')[1] : "league";
-        // !this.isDepartment && pageName = "league";
-        // if (this.isDepartment) {
-        //   this.$router.push(`/search/second/${this.college_id}`);
-        // } else {
-        //   pageName="league";
-        //   this.$router.push(`/search/league/${this.college_id}`);
-        // }
         this.$router.push({
           path: `/search/${pageName}/0`, query: {
             dataArr: this.dataArr,
@@ -208,17 +219,87 @@
         this.$store.commit("SET_ItemName", this.itemName);
         this.$store.commit("SET_SearchFrom", pageName);
       },
+
+      touchus(){
+        this.isMask=true;
+      },
+      goNum(){
+        this.isMask=false;
+        let u = navigator.userAgent;
+        let isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
+        let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+          window.yingxin.goGroup(628486154);
+        } else if (isIOS) {
+          window.webkit.messageHandlers.goGroup.postMessage(628486154);
+        }
+      },
+      mackOk(){
+        this.isMask=false;
+      }
     },
   };
 </script>
-
 <style scoped>
+  /*联系我们*/
+  .mask{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(153, 153, 153, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+  .touch-box{
+    display: flex;
+    width: 328px;
+    height: 172px;
+    background-color: #fff;
+    flex-direction: column;
+    padding: 21px 28px;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.16);
+    border-radius: 5px;
+  }
+  .touch-title{
+    width: 328px;
+    font-size: 20px;
+    margin: 15px 0;
+  }
+  .touch-text{
+    width: 272px;
+    font-family: Source Han Sans SC;
+    font-size: 15px;
+    height: 50px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 25px;
+    letter-spacing: 0px;
+    color: #3b3b3b;
+  }
+  .touch-footer{
+    width: 272px;
+    height: 41px;
+    font-size: 15px;
+    color: #3b9eff;
+  }
+  .footer-box{
+    margin-left: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 112px;
+  }
+  /*总*/
   #home {
     height: 100vh;
     background-color: #f8f8f8;
     overflow: hidden;
   }
-
   #home #title_bar {
     border: #f8f8f8 1px solid;
     box-sizing: border-box;
@@ -238,6 +319,7 @@
   #home #title_bar #title_body #title_front {
     display: flex;
     align-items: center;
+    justify-content: space-around;
   }
 
   #home #title_bar #title_body #title_front .back_icon {
@@ -248,6 +330,11 @@
   #home #title_bar #title_body #title_front #title_label {
     margin-left: 26px;
     font-size: 18px;
+  }
+
+  #home #title_bar #title_body .connect-us {
+    color: #999999;
+    font-size: 14px;
   }
 
   #home #title_bar #title_body #title_search .search_icon {
@@ -360,6 +447,5 @@
       /*左上*/
     }
   }
-
   /*# sourceMappingURL=01.css.map */
 </style>

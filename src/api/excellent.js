@@ -1,5 +1,7 @@
 import Vue from 'vue';
-let request=Vue.prototype.$axios;
+
+let request = Vue.prototype.$axios;
+
 //获取学院简称
 function getExcellent() {
   return request({
@@ -7,4 +9,5 @@ function getExcellent() {
     method: 'get'
   })
 }
-export{getExcellent}
+
+export {getExcellent}

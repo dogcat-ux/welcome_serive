@@ -1,7 +1,8 @@
 <template>
   <div class="container" v-show="isShow">
-<!--    <div class="loading"></div>-->
-    <p class="title">{{title}}</p>
+    <div class="msg-box">
+      1111
+    </div>
   </div>
 </template>
 
@@ -19,41 +20,14 @@
 
 <style scoped>
   .container{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(158, 158, 158, 0.5);
+  }
+  .msg-box{
     width: 200px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*width: 200px;*/
-    /*height: 200px;*/
-    border-radius: 20px;
-    background: rgba(0,0,0,0.5);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    height: 60px;
+    background-color: #fff;
   }
 
-  .loading{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    margin: 20px auto;
-    border-right-color: #409eff;
-    animation: loading 2s linear infinite;
-  }
-  .title{
-    text-align: center;
-    font-size: 16px;
-    color: #fff;
-  }
-  @keyframes loading {
-    from{
-      transform: rotate(0deg);
-    }
-    to{
-      transform: rotate(360deg);
-    }
-  }
 </style>
